@@ -8,10 +8,17 @@ echo "#                                             #"
 echo "#  Welcome to the FOP Workspace Setup Script  #"
 echo "#                                             #"
 echo "###############################################"
+echo ""
+echo ""
 
 while true; do
+    echo ""
+    echo ""
     echo "How should the repository be named (remotely, on github)?"
     read REPO_NAME
+
+    echo ""
+    echo ""
 
     echo "Is this correct? (y/n)"
     echo "Repository name: $REPO_NAME"
@@ -24,12 +31,17 @@ while true; do
 done
 
 while true; do
+    echo ""
+    echo ""
     echo "How should the repository be named (locally, on your computer)?"
 
     read REPO_DIR
 
-    echo "Is this correct? (y/n)"
+    echo ""
+    echo ""
+
     echo "Repository name: $REPO_DIR"
+    echo "Is this correct? (y/n)"
     read yn
     case $yn in
         [Yy]* ) break;;
