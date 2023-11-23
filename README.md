@@ -76,7 +76,7 @@ release to show up.
 
 ## Technical
 
-The local repository has to remotes registered, `origin` and `from`. In case you need to Merge changes done to the exercise
+The local repositories have two remotes registered, `origin` and `from`. In case you need to Merge changes done to the exercise
 after you cloned it, you can do this via the from origin.
 
 Also note that the github action will create a release for every commit pushed.
