@@ -131,6 +131,8 @@ gh repo create $REPO_NAME --private
 git remote add origin https://github.com/$GITHUB_USERNAME/$REPO_NAME.git
 git push --set-upstream origin main --force
 
+chmod +x create.sh
+
 echo ""
 echo ""
 
