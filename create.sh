@@ -12,6 +12,13 @@ PROVIDER_GIT=https://github.com/FOP-2324
 REPO_PREFIX=TU-
 REPO_DIR_PREFIX=TU-
 
+if [ -f "settings.properties" ]; then
+    echo "Loading settings from settings.properties..."
+    source settings.properties
+else
+    echo "Settings file not found. Using default settings."
+fi
+
 # The repository name
 REPO_NAME=$1
 MY_REPO_NAME=$REPO_PREFIX$REPO_NAME

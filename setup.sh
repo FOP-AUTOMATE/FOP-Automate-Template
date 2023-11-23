@@ -43,6 +43,10 @@ echo "STUDENT_ID=$STUDENT_ID" > settings.properties
 echo "FIRST_NAME=$FIRST_NAME" >> settings.properties
 echo "LAST_NAME=$LAST_NAME" >> settings.properties
 echo "GITHUB_USERNAME=$GITHUB_USERNAME" >> settings.properties
+echo "" >> settings.properties
+echo "PROVIDER_GIT=https://github.com/FOP-2324" >> settings.properties
+echo "REPO_PREFIX=TU-" >> settings.properties
+echo "REPO_DIR_PREFIX=TU-" >> settings.properties
 
 echo "Saved settings to settings.properties"
 
