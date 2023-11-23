@@ -5,6 +5,8 @@ _I got tired of cloning the git repositories manually. It took me nearly one min
 
 ## Prerequisites
 
+**This is based on a shell script and therefore will not work with windows. It is tested with mac and should work with linux as well**
+
 You need a github account (https://github.com/) and in best case the github education pack (https://education.github.com/pack)
 (We wan't to run workflows on private repositories, so github for education makes sence)
 
