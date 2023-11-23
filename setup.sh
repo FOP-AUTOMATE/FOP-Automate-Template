@@ -20,8 +20,8 @@ while true; do
     echo ""
     echo ""
 
-    echo "Is this correct? (y/n)"
     echo "Repository name: $REPO_NAME"
+    echo "Is this correct? (y/n)"
     read yn
     case $yn in
         [Yy]* ) break;;
