@@ -15,11 +15,25 @@ We use it to automatically create the repository (even less work, lazy sock 😉
 
 ## _"Installation"_
 
+### Using the setup script
+
+Open the terminal and select a directory. In here a subdirectory will be created containing your workspace.
+Type the following command:
+
+```sh
+source <(curl -s https://raw.githubusercontent.com/nsc-de/FOP-Automate-Template/main/setup.sh)
+```
+
+The install script will ask you for all information needed and guide you through the process.
+
+### Manual
+
+- Use this template repository
 - Clone the repository
 - Open it with the text editor of your choice. In line 7-10 you wan't to change the information to match your information
-  
+
   e.g.
-  
+
   ```sh
   STUDENT_ID=hp81pfui
   FIRST_NAME=Harry
@@ -28,7 +42,7 @@ We use it to automatically create the repository (even less work, lazy sock 😉
   ```
 
 - Now we need to make the script executable:
-  
+
   ```sh
   chmod +x create.sh
   ```
