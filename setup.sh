@@ -64,7 +64,7 @@ fi
 
 # Clone from github
 git clone https://github.com/nsc-de/FOP-Automate-Template.git $REPO_DIR
-cd TU-FOP-Workspace
+cd $REPO_DIR
 git remote rename origin from
 
 while true; do
