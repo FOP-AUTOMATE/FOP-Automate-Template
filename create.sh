@@ -4,7 +4,10 @@
 
 # Settings
 
-GITHUB_USERNAME={INSERT_YOUR_GITHUB_USERNAME_HERE}
+STUDENT_ID={{YOUR_STUDENT_ID}}
+FIRST_NAME={{YOUR_FIRST_NAME}}
+LAST_NAME={{YOUR_LAST_NAME}}
+GITHUB_USERNAME={{YOUR_GITHUB_USER_NAME}}
 PROVIDER_GIT=https://github.com/FOP-2324
 REPO_PREFIX=TU-
 REPO_DIR_PREFIX=TU-
@@ -31,12 +34,10 @@ cd $REPO_DIR
 
 # Check if git repository exists (if not, create it) (using gh)
 if ! gh repo view $MY_REPO_NAME > /dev/null 2>&1; then
-    gh repo create $MY_REPO_NAME --confirm --private
+    gh repo create $MY_REPO_NAME --private
     # Mirror the repository
     git push --mirror git@github.com:$GITHUB_USERNAME/$MY_REPO_NAME.git
 fi
-
-cd $REPO_DIR
 
 # If "origin" remote exists and is not the same as the one we want, remove it
 if git remote | grep -q origin && [ "$(git remote get-url origin)" != "$MY_REPO" ]; then
@@ -69,4 +70,33 @@ if ! git ls-files --error-unmatch .github/workflows/build.yml > /dev/null 2>&1 |
     git push origin main
 else
     echo "Workflow file has not changed"
+fi
+
+# Modify build.gradle.kts
+if [ -f "build.gradle.kts" ]; then
+    echo "Modifying build.gradle.kts..."
+    
+    # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
+    sed -i '' 's/studentId = null/studentId = "'"$STUDENT_ID"'"/g' build.gradle.kts
+
+    # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
+    sed -i '' 's/firstName = null/firstName = "'"$FIRST_NAME"'"/g' build.gradle.kts
+
+    # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
+    sed -i '' 's/lastName = null/lastName = "'"$LAST_NAME"'"/g' build.gradle.kts
+
+    echo "build.gradle.kts modified successfully."
+else
+    echo "Error: build.gradle.kts not found!"
+    exit 1
+fi
+
+# Commit and push changes
+if ! git diff --quiet build.gradle.kts; then
+    echo "build.gradle.kts has changed. Adding and committing..."
+    git add build.gradle.kts
+    git commit -m "Update student information"
+    git push origin main
+else
+    echo "build.gradle.kts has not changed"
 fi

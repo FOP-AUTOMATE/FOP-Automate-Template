@@ -19,7 +19,16 @@ We use it to automatically create the repository (even less work, lazy sock 😉
 
 The `create.sh` needs to be placed inside of a folder. 
 
-Open it with the text editor of your choice. In line 7 you wan't to change the {INSERT_YOUR_GITHUB_USERNAME_HERE} to your github user name.
+Open it with the text editor of your choice. In line 7-10 you wan't to change the information to match your information
+
+e.g.
+
+```sh
+STUDENT_ID=hp81pfui
+FIRST_NAME=Harry
+LAST_NAME=Potter
+GITHUB_USERNAME=harry-potter
+```
 
 Now we need to make the script executable:
 
