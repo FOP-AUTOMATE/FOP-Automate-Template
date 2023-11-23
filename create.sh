@@ -106,3 +106,19 @@ if ! git diff --quiet build.gradle.kts; then
 else
     echo "build.gradle.kts has not changed"
 fi
+
+cd ..
+
+# Absorb if we are in a git repository
+if [ -d ".git" ]; then
+    git submodule add $MY_REPO $REPO_DIR
+    git add $REPO_DIR
+    git add .gitmodules
+
+    # Check if there are changes to commit
+    if ! git diff --quiet; then
+        git commit -m "Add submodule $REPO_DIR"
+    else
+        echo "No changes to commit."
+    fi
+fi
