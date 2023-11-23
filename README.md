@@ -13,41 +13,25 @@ Also you need to install gh client (https://github.com/cli/cli#installation)
 
 We use it to automatically create the repository (even less work, lazy sock 😉)
 
-## "Installation"
+## _"Installation"_
 
-The `create.sh` needs to be placed inside of a folder.
+- Clone the repository
+- Open it with the text editor of your choice. In line 7-10 you wan't to change the information to match your information
+  
+  e.g.
+  
+  ```sh
+  STUDENT_ID=hp81pfui
+  FIRST_NAME=Harry
+  LAST_NAME=Potter
+  GITHUB_USERNAME=harry-potter
+  ```
 
-Open it with the text editor of your choice. In line 7-10 you wan't to change the information to match your information
-
-e.g.
-
-```sh
-STUDENT_ID=hp81pfui
-FIRST_NAME=Harry
-LAST_NAME=Potter
-GITHUB_USERNAME=harry-potter
-```
-
-Now we need to make the script executable:
-
-```sh
-chmod +x create.sh
-```
-
-## Additional
-
-In this gist we also provide a build workflow. This workflow automatically builds the submission using github actions.
-So if you commit and push changes to github, it automatically builds them. It creates a new release on your repository.
-So you can just download the submission. Even less work 💪
-
-To use this you just need to put the `build-workflow-template.yml` file into the same directory as the `create.sh` file
-
-You will find the release on your github repo's site
-
-<img width="1405" alt="image" src="https://user-images.githubusercontent.com/64435955/285269979-b727ae67-c181-47aa-a4d1-11731691d1f7.png">
-
-Click on the latest release and under `assets` download the jar. Note that after a push it will take about a minute for the
-release to show up.
+- Now we need to make the script executable:
+  
+  ```sh
+  chmod +x create.sh
+  ```
 
 ## Usage
 
@@ -67,6 +51,14 @@ The git repository wil be created as `TU-FOP-2324-H00-Student` in this case and 
 `TU-FOP-2324-H00-Student` (You can change the prefix `TU-` inside the settings section of the create.sh file)
 
 Now just import the local repository using IntelliJ
+
+After committing and pushing to GitHub _(origin)_, you will find the release on your github repo's site
+_it will take about a minute to build the submission_, be patient.
+
+<img width="1405" alt="image" src="https://user-images.githubusercontent.com/64435955/285269979-b727ae67-c181-47aa-a4d1-11731691d1f7.png">
+
+Click on the latest release and under `assets` download the jar. Note that after a push it will take about a minute for the
+release to show up.
 
 ## Technical
 
