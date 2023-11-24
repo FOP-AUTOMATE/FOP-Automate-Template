@@ -1,0 +1,30 @@
+name: CI for Template (Should be disabled on clones)
+
+on:
+  push:
+
+concurrency:
+    group: nsc-de/build-workflow-template
+        cancel-in-progress: true
+    
+jobs:
+    test-on-linux:
+        if: github.repository == 'nsc-de/FOP-Automate-Template'
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+      
+        - name: Run setup script
+          run: |
+            chmod +x ./setup.sh
+            ./setup.sh
+
+          environment:
+            GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+            REPO_NAME: "FOP-Automate-Test"
+            REPO_DIR: "FOP-Automate-Test"
+            STUDENT_ID: "hp81pfui"
+            FIRST_NAME: "Harry"
+            LAST_NAME: "Potter"
+            GITHUB_USERNAME: "Tester0804"
+
