@@ -121,7 +121,7 @@ jobs:
 
       - name: "Cleanup"
         run: |
-          gh repo delete FOP-Automate-Test --yes
-          gh repo delete TU-FOP-2324-H00-Student --yes
+          # gh repo delete FOP-Automate-Test --yes
+          # gh repo delete TU-FOP-2324-H00-Student --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
