@@ -32,6 +32,13 @@ jobs:
           LAST_NAME: "Potter"
           GITHUB_USERNAME: "Tester0804"
 
+      - name: Create a repo
+        run: |
+          ./create.sh FOP-2324-H00-Student
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+        working-directory: ./FOP-Automate-Test
+
       - name: "Cleanup"
         run: |
           gh repo delete FOP-Automate-Test --yes
