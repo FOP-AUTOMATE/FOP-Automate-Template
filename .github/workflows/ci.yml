@@ -4,27 +4,25 @@ on:
   push:
 
 concurrency:
-    group: nsc-de/build-workflow-template
-        cancel-in-progress: true
-    
+  group: nsc-de/build-workflow-template
+  cancel-in-progress: true
+
 jobs:
-    test-on-linux:
-        if: github.repository == 'nsc-de/FOP-Automate-Template'
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v2
-      
-        - name: Run setup script
-          run: |
-            chmod +x ./setup.sh
-            ./setup.sh
+  test-on-linux:
+    if: github.repository == 'nsc-de/FOP-Automate-Template'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-          environment:
-            GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
-            REPO_NAME: "FOP-Automate-Test"
-            REPO_DIR: "FOP-Automate-Test"
-            STUDENT_ID: "hp81pfui"
-            FIRST_NAME: "Harry"
-            LAST_NAME: "Potter"
-            GITHUB_USERNAME: "Tester0804"
-
+      - name: Run setup script
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+          REPO_NAME: "FOP-Automate-Test"
+          REPO_DIR: "FOP-Automate-Test"
+          STUDENT_ID: "hp81pfui"
+          FIRST_NAME: "Harry"
+          LAST_NAME: "Potter"
+          GITHUB_USERNAME: "Tester0804"
