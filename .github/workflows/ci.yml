@@ -20,8 +20,8 @@ jobs:
           git config --global user.email "151953895+Tester0804@users.noreply.github.com"
 
           git config --global credential.helper 'cache --timeout=3600' 
-          git config --global credential.https://github.com.username Tester0804
-          git config --global credential.https://github.com.password ${{ secrets.GH_TEST_TOKEN }}
+          git config --global credential.https://github.com.username 'Tester0804'
+          git config --global credential.https://github.com.password '${{ secrets.GH_TEST_TOKEN }}'
 
       - name: Run setup script
         run: |
