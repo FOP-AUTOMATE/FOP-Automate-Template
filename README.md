@@ -8,7 +8,8 @@ You need a github account (https://github.com/) and in best case the github educ
 (We wan't to run workflows on private repositories, so github for education makes sence)
 
 Also you need to install gh client (https://github.com/cli/cli#installation)
-[oh, and git of course](https://git-scm.com/)
+
+oh, and git of course (https://git-scm.com/)
 
 We use it to automatically create the repository (even less work, lazy sock 😉)
 
