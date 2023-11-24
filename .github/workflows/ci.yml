@@ -34,6 +34,6 @@ jobs:
 
       - name: "Cleanup"
         run: |
-        #  gh repo delete FOP-Automate-Test --yes
+          gh repo delete FOP-Automate-Test --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
