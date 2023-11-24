@@ -36,6 +36,7 @@ jobs:
       - name: Create a repo
         run: |
           ./create.sh FOP-2324-H00-Student
+          ./create.sh FOP-2324-H07-Student
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
         working-directory: ./FOP-Automate-Test
@@ -44,6 +45,7 @@ jobs:
         run: |
           gh repo delete FOP-Automate-Test --yes
           gh repo delete TU-FOP-2324-H00-Student --yes
+          gh repo delete TU-FOP-2324-H07-Student --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
 
@@ -76,6 +78,7 @@ jobs:
       - name: Create a repo
         run: |
           ./create.sh FOP-2324-H00-Student
+          ./create.sh FOP-2324-H07-Student
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
         working-directory: ./FOP-Automate-Test
@@ -84,6 +87,7 @@ jobs:
         run: |
           gh repo delete FOP-Automate-Test --yes
           gh repo delete TU-FOP-2324-H00-Student --yes
+          gh repo delete TU-FOP-2324-H07-Student --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
 
@@ -115,6 +119,7 @@ jobs:
         shell: pwsh
         run: |
           ./create.ps1 FOP-2324-H00-Student
+          ./create.ps1 FOP-2324-H07-Student
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
         working-directory: ./FOP-Automate-Test
@@ -123,5 +128,6 @@ jobs:
         run: |
           gh repo delete FOP-Automate-Test --yes
           gh repo delete TU-FOP-2324-H00-Student --yes
+          gh repo delete TU-FOP-2324-H07-Student --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
