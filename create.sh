@@ -91,20 +91,44 @@ fi
 if [ -f "build.gradle.kts" ]; then
   echo "Modifying build.gradle.kts..."
 
-  # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
-  sed -i '' 's/studentId = null/studentId = "'"$STUDENT_ID"'"/g' build.gradle.kts
+  OS=$(uname)
 
-  # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
-  sed -i '' 's/firstName = null/firstName = "'"$FIRST_NAME"'"/g' build.gradle.kts
+  # Set the sed command based on the operating system
+  if [ "$OS" == "Darwin" ]; then
 
-  # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
-  sed -i '' 's/lastName = null/lastName = "'"$LAST_NAME"'"/g' build.gradle.kts
+    # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
+    sed -i '' 's/studentId = null/studentId = "'"$STUDENT_ID"'"/g' build.gradle.kts
 
-  # And the workaround for newer versions where the line looks like this:
-  # // studentId.set("")
-  sed -i '' 's|// studentId.set("")|studentId.set("'"$STUDENT_ID"'")|g' build.gradle.kts
-  sed -i '' 's|// firstName.set("")|firstName.set("'"$FIRST_NAME"'")|g' build.gradle.kts
-  sed -i '' 's|// lastName.set("")|lastName.set("'"$LAST_NAME"'")|g' build.gradle.kts
+    # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
+    sed -i '' 's/firstName = null/firstName = "'"$FIRST_NAME"'"/g' build.gradle.kts
+
+    # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
+    sed -i '' 's/lastName = null/lastName = "'"$LAST_NAME"'"/g' build.gradle.kts
+
+    # And the workaround for newer versions where the line looks like this:
+    # // studentId.set("")
+    sed -i '' 's|// studentId.set("")|studentId.set("'"$STUDENT_ID"'")|g' build.gradle.kts
+    sed -i '' 's|// firstName.set("")|firstName.set("'"$FIRST_NAME"'")|g' build.gradle.kts
+    sed -i '' 's|// lastName.set("")|lastName.set("'"$LAST_NAME"'")|g' build.gradle.kts
+
+  else
+
+    # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
+    sed -i 's/studentId = null/studentId = "'"$STUDENT_ID"'"/g' build.gradle.kts
+
+    # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
+    sed -i 's/firstName = null/firstName = "'"$FIRST_NAME"'"/g' build.gradle.kts
+
+    # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
+    sed -i 's/lastName = null/lastName = "'"$LAST_NAME"'"/g' build.gradle.kts
+
+    # And the workaround for newer versions where the line looks like this:
+    # // studentId.set("")
+    sed -i 's|// studentId.set("")|studentId.set("'"$STUDENT_ID"'")|g' build.gradle.kts
+    sed -i 's|// firstName.set("")|firstName.set("'"$FIRST_NAME"'")|g' build.gradle.kts
+    sed -i 's|// lastName.set("")|lastName.set("'"$LAST_NAME"'")|g' build.gradle.kts
+
+  fi
 
   echo "build.gradle.kts modified successfully."
 else
