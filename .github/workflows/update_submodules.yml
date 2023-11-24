@@ -7,6 +7,7 @@ on:
   schedule:
     # Runs every 10 minutes
     - cron: "*/10 * * * *"
+  push:
 
 jobs:
   sync:
@@ -40,4 +41,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update submodules 📝"
-          token: ${{ secrets.GITHUB_TOKEN }}
