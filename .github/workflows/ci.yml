@@ -31,3 +31,7 @@ jobs:
           FIRST_NAME: "Harry"
           LAST_NAME: "Potter"
           GITHUB_USERNAME: "Tester0804"
+
+      - name: "Cleanup"
+        run: |
+          gh repo delete FOP-Automate-Test --yes
