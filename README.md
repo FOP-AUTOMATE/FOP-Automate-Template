@@ -9,9 +9,9 @@ You need a github account (https://github.com/) and in best case the github educ
 
 Also you need to install gh client (https://github.com/cli/cli#installation)
 
-And git of course (https://git-scm.com/)
+We use it to automatically create the repositories (even less work, lazy sock 😉)
 
-We use it to automatically create the repository (even less work, lazy sock 😉)
+And git of course (https://git-scm.com/)
 
 ## _"Installation"_ (Linux/Mac)
 
