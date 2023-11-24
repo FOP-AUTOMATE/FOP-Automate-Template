@@ -209,8 +209,6 @@ if [[ -n "$CI" ]]; then
   # Set the Git remote with the GitHub token
   GITHUB_TOKEN=$GITHUB_TOKEN # This assumes you have already exported the token as an environment variable
   git remote set-url origin "https://${GITHUB_TOKEN}@github.com/$GITHUB_USERNAME/$REPO_NAME.git"
-else
-  echo "Not running in CI environment"
 fi
 
 git push --set-upstream origin main --force
