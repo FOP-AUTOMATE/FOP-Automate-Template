@@ -199,6 +199,18 @@ git commit -m "Added settings.properties"
 
 gh repo create $REPO_NAME --private
 git remote add origin https://github.com/$GITHUB_USERNAME/$REPO_NAME.git
+
+# CI Fix
+if [[ -n "$CI" ]]; then
+  echo "Running in CI environment"
+
+  # Set the Git remote with the GitHub token
+  GITHUB_TOKEN=$GITHUB_TOKEN # This assumes you have already exported the token as an environment variable
+  git remote set-url origin "https://${GITHUB_TOKEN}@github.com/nsc-de/$GITHUB_USERNAME/$REPO_NAME.git"
+else
+  echo "Not running in CI environment"
+fi
+
 git push --set-upstream origin main --force
 
 chmod +x create.sh
