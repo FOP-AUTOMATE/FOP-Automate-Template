@@ -198,8 +198,6 @@ git add settings.properties
 git commit -m "Added settings.properties"
 
 gh repo create $REPO_NAME --private
-echo "Waiting 5 seconds for github to create the repository"
-sleep 5
 git remote add origin https://github.com/$GITHUB_USERNAME/$REPO_NAME.git
 
 # CI Fix
