@@ -51,8 +51,14 @@ $MY_REPO_NAME = $REPO_PREFIX + $REPO_NAME
 $REPO_DIR = $REPO_DIR_PREFIX + $REPO_NAME
 $MY_REPO = "https://github.com/$GITHUB_USERNAME/$MY_REPO_NAME.git"
 
-# ... rest of the script remains unchanged ...
+# CI Fix
+if ($env:CI) {
+    Write-Host "Running in CI environment"
 
+    # Set the Git remote with the GitHub token
+    $GITHUB_TOKEN = $env:GITHUB_TOKEN  # This assumes you have already exported the token as an environment variable
+    $MY_REPO = "https://$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/$MY_REPO_NAME.git"
+}
 
 # Create a new repository
 if (-not $REPO_NAME) {
@@ -67,19 +73,9 @@ if (-not (Test-Path $REPO_DIR)) {
 
 cd $REPO_DIR
 
-# Check if git repository exists (if not, create it) (using gh)
-if (-not (gh repo view $MY_REPO_NAME -q)) {
-    gh repo create $MY_REPO_NAME --private
-    # Mirror the repository
-    git push --mirror "git@github.com:$GITHUB_USERNAME/$MY_REPO_NAME.git"
-}
-
 # If "origin" remote exists and is not the same as the one we want, remove it
-if (git remote | Select-String -Pattern 'origin' -Quiet) {
-    $originUrl = (git remote get-url origin)
-    if ($originUrl -ne $MY_REPO) {
-        git remote remove origin
-    }
+if ((git remote | Select-String -Pattern 'origin' -Quiet) -and ((git remote get-url origin) -ne $MY_REPO)) {
+    git remote remove origin
 }
 
 # Add "origin" remote
@@ -92,18 +88,25 @@ if (-not (git remote | Select-String -Pattern 'from' -Quiet)) {
     git remote add from "$PROVIDER_GIT/$REPO_NAME.git"
 }
 
+# Check if git repository exists (if not, create it) (using gh)
+if (-not (gh repo view $MY_REPO_NAME -q)) {
+    gh repo create $MY_REPO_NAME --private
+    # Mirror the repository
+    git push --mirror
+}
+
 # If .github or workflows directory does not exist, create it
-if (-not (Test-Path ".github\workflows")) {
-    New-Item -ItemType Directory -Path ".github\workflows" | Out-Null
+if (-not (Test-Path ".\github\workflows")) {
+    New-Item -ItemType Directory -Path ".\github\workflows" | Out-Null
 }
 
 # Copy workflow template
-Copy-Item "..\build-workflow-template.yml" -Destination ".github\workflows\build.yml" -Force
+Copy-Item "..\build-workflow-template.yml" -Destination ".\github\workflows\build.yml" -Force
 
 # Add and commit the workflow file if not present or has changes
-if ((-not (git ls-files --error-unmatch ".github\workflows\build.yml" -Quiet)) -or (-not (git diff --quiet ".github\workflows\build.yml"))) {
+if ((-not (git ls-files --error-unmatch ".\github\workflows\build.yml" -Quiet)) -or (-not (git diff --quiet ".\github\workflows\build.yml"))) {
     Write-Host "Workflow file has changed or is not tracked. Adding and committing..."
-    git add ".github\workflows\build.yml"
+    git add ".\github\workflows\build.yml"
     git commit -m "Update build workflow"
     git push origin main
 } else {
@@ -113,21 +116,45 @@ if ((-not (git ls-files --error-unmatch ".github\workflows\build.yml" -Quiet)) -
 # Modify build.gradle.kts
 if (Test-Path "build.gradle.kts") {
     Write-Host "Modifying build.gradle.kts..."
-    
-    # Replace "studentId = null" with "studentId = "$STUDENT_ID""
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'studentId = null', "studentId = ""$STUDENT_ID"""} | Set-Content "build.gradle.kts"
 
-    # Replace "firstName = null" with "firstName = "$FIRST_NAME""
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'firstName = null', "firstName = ""$FIRST_NAME"""} | Set-Content "build.gradle.kts"
+    $OS = $env:OS
 
-    # Replace "lastName = null" with "lastName = "$LAST_NAME""
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'lastName = null', "lastName = ""$LAST_NAME"""} | Set-Content "build.gradle.kts"
-    
-    # And the workaround for newer versions where the line looks like this:
-    # // studentId.set("")
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// studentId.set("")', "studentId.set(""\""$STUDENT_ID""\"")"} | Set-Content "build.gradle.kts"
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// firstName.set("")', "firstName.set(""\""$FIRST_NAME""\"")"} | Set-Content "build.gradle.kts"
-    (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// lastName.set("")', "lastName.set(""\""$LAST_NAME""\"")"} | Set-Content "build.gradle.kts"
+    # Set the sed command based on the operating system
+    if ($OS -eq "Darwin") {
+
+        # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'studentId = null', "studentId = ""$STUDENT_ID"""} | Set-Content "build.gradle.kts"
+
+        # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'firstName = null', "firstName = ""$FIRST_NAME"""} | Set-Content "build.gradle.kts"
+
+        # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'lastName = null', "lastName = ""$LAST_NAME"""} | Set-Content "build.gradle.kts"
+
+        # And the workaround for newer versions where the line looks like this:
+        # // studentId.set("")
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// studentId.set("")', "studentId.set(""\""$STUDENT_ID""\"")"} | Set-Content "build.gradle.kts"
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// firstName.set("")', "firstName.set(""\""$FIRST_NAME""\"")"} | Set-Content "build.gradle.kts"
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// lastName.set("")', "lastName.set(""\""$LAST_NAME""\"")"} | Set-Content "build.gradle.kts"
+
+    } else {
+
+        # Replace "studentId = null" with "studentId = \"$STUDENT_ID\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'studentId = null', "studentId = ""$STUDENT_ID"""} | Set-Content "build.gradle.kts"
+
+        # Replace "firstName = null" with "firstName = \"$FIRST_NAME\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'firstName = null', "firstName = ""$FIRST_NAME"""} | Set-Content "build.gradle.kts"
+
+        # Replace "lastName = null" with "lastName = \"$LAST_NAME\""
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace 'lastName = null', "lastName = ""$LAST_NAME"""} | Set-Content "build.gradle.kts"
+
+        # And the workaround for newer versions where the line looks like this:
+        # // studentId.set("")
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// studentId.set("")', "studentId.set(""\""$STUDENT_ID""\"")"} | Set-Content "build.gradle.kts"
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// firstName.set("")', "firstName.set(""\""$FIRST_NAME""\"")"} | Set-Content "build.gradle.kts"
+        (Get-Content "build.gradle.kts") | ForEach-Object {$_ -replace '// lastName.set("")', "lastName.set(""\""$LAST_NAME""\"")"} | Set-Content "build.gradle.kts"
+
+    }
 
     Write-Host "build.gradle.kts modified successfully."
 } else {

@@ -10,6 +10,7 @@ concurrency:
 jobs:
   test-on-linux:
     if: github.repository == 'nsc-de/FOP-Automate-Template'
+    needs: test-on-windows
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -75,6 +76,45 @@ jobs:
       - name: Create a repo
         run: |
           ./create.sh FOP-2324-H00-Student
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+        working-directory: ./FOP-Automate-Test
+
+      - name: "Cleanup"
+        run: |
+          gh repo delete FOP-Automate-Test --yes
+          gh repo delete TU-FOP-2324-H00-Student --yes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+
+  test-on-windows:
+    if: github.repository == 'nsc-de/FOP-Automate-Template'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Set up git"
+        run: |
+          git config --global user.name "Tester0804"
+          git config --global user.email "151953895+Tester0804@users.noreply.github.com"
+
+      - name: Run setup script
+        shell: pwsh
+        run: |
+          ./setup.ps1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
+          REPO_NAME: "FOP-Automate-Test"
+          REPO_DIR: "FOP-Automate-Test"
+          STUDENT_ID: "hp81pfui"
+          FIRST_NAME: "Harry"
+          LAST_NAME: "Potter"
+          GITHUB_USERNAME: "Tester0804"
+
+      - name: Create a repo
+        shell: pwsh
+        run: |
+          ./create.ps1 FOP-2324-H00-Student
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TEST_TOKEN }}
         working-directory: ./FOP-Automate-Test
