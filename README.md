@@ -13,7 +13,7 @@ Also you need to install gh client (https://github.com/cli/cli#installation)
 
 We use it to automatically create the repository (even less work, lazy sock 😉)
 
-## _"Installation"_
+## _"Installation"_ (Linux/Mac)
 
 ### Using the setup script
 
@@ -47,7 +47,21 @@ The install script will ask you for all information needed and guide you through
   chmod +x create.sh
   ```
 
-## Usage
+## _"Installation"_ (Windows)
+
+### Using the setup script
+
+Open the powershell and select a directory. In here a subdirectory will be created containing your workspace.
+
+Now type the following command:
+
+```ps
+powershell.exe -ExecutionPolicy Bypass -Command "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/nsc-de/FOP-Automate-Template/main/setup.ps1'))"
+```
+
+The install script will ask you for all information needed and guide you through the process.
+
+## Usage (Linux/Mac)
 
 From the terminal we just type
 
@@ -61,8 +75,35 @@ e.g.
 ./create.sh FOP-2324-H00-Student
 ```
 
-The git repository wil be created as `TU-FOP-2324-H00-Student` in this case and locally will be put inside
-`TU-FOP-2324-H00-Student` (You can change the prefix `TU-` inside the settings section of the create.sh file)
+## Usage (Windows)
+
+From the powershell we just type
+
+```ps
+powershell.exe -ExecutionPolicy Bypass -Command "./create.ps1 [Exercise]"
+```
+
+e.g.
+
+```ps
+powershell.exe -ExecutionPolicy Bypass -Command "./create.ps1 FOP-2324-H00-Student"
+```
+
+Sadly we can't just use ./create.ps1, because ExecutionPolicy is set to restricted by default.
+
+if you wan't to change this, you can do so by typing
+
+```ps
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+```
+
+But be aware that this is a security risk.
+
+## Usage general
+
+After running the create command, the git repository wil be created as `TU-FOP-2324-H00-Student` in this case and locally
+will be put inside `TU-FOP-2324-H00-Student` (You can change the prefix `TU-` inside the settings section of the create.sh
+file)
 
 Now just import the local repository using IntelliJ
 
