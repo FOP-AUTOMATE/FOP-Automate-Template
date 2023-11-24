@@ -22,15 +22,21 @@ function Read-PropertiesFileAndSetVariables {
     foreach ($line in $propertiesContent) {
         # Skip comment lines (lines starting with #)
         if ($line -notmatch '^\s*#') {
-            # Split the line into key and value using the '=' character
-            $key, $value = $line -split '=', 2
+            # Check if the line contains the '=' character
+            if ($line -match '=') {
+                # Split the line into key and value using the '=' character
+                $key, $value = $line -split '=', 2
 
-            # Remove leading and trailing whitespaces from key and value
-            $key = $key.Trim()
-            $value = $value.Trim()
+                # Remove leading and trailing whitespaces from key and value
+                $key = $key.Trim()
+                $value = $value.Trim()
 
-            # Set variable in the local scope
-            Set-Variable -Name $key -Value $value -Scope Script
+                # Set variable in the local scope
+                Set-Variable -Name $key -Value $value -Scope Script
+            }
+            else {
+                Write-Host "Invalid line in properties file: $line"
+            }
         }
     }
 }
