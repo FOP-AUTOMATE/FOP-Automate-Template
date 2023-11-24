@@ -95,7 +95,7 @@ if (-not (git remote | Select-String -Pattern 'from' -Quiet)) {
 }
 
 # Check if git repository exists (if not, create it) (using gh)
-if (-not (gh repo view $MY_REPO_NAME -q)) {
+if (-not (gh repo view $MY_REPO_NAME)) {
     gh repo create $MY_REPO_NAME --private
     # Mirror the repository
     git push --mirror
