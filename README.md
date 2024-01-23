@@ -91,7 +91,7 @@ powershell.exe -ExecutionPolicy Bypass -Command "./create.ps1 FOP-2324-H00-Stude
 
 Sadly we can't just use ./create.ps1, because ExecutionPolicy is set to restricted by default.
 
-if you wan't to change this, you can do so by typing
+if you want to change this, you can do so by typing
 
 ```ps
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted
